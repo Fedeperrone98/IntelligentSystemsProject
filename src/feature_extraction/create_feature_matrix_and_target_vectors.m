@@ -7,7 +7,7 @@ clc
 c = constants();
 
 % matrix creation 
-FEATURES_OVER_WINDS = zeros(c.feature_matrix_row_number, c.feature_matrix_column_number *c.windows_number_overlapped);
+FEATURES = zeros(c.feature_matrix_row_number, c.feature_matrix_column_number *c.windows_number_overlapped);
 MEAN_ECG = zeros(c.feature_matrix_row_number, 1);
 STD_ECG = zeros(c.feature_matrix_row_number, 1);
 ACTIVITY_CLASSES = zeros(c.feature_matrix_row_number, 1);
@@ -43,10 +43,16 @@ for m = 1 : c.number_of_measurement
         csv_table_timeseries_without_miss = fillmissing(temp_csv_table_timeseries,"constant", column_means);
         
         % conversion of the table containing the signals value
-        timeseries_matrix_with_outliers = table2array(csv_table_timeseries_without_miss);
-        
-        %% REMOVE OUTLIERS
-        matrix_to_extract_features = rmoutliers(timeseries_matrix_with_outliers);
+        matrix_to_extract_features = table2array(csv_table_timeseries_without_miss);
+       
+        %% EXTRACT FEATURES
+        % feature matrix with overlapped windows
+        FEATURES = matrix_copy(FEATURES,...
+                               produce_feature_vector(matrix_to_extract_features,...
+                                                    c.windows_number_overlapped),...
+                               feature_matrix_current_index,... 
+                               1);
+        feature_matrix_current_index = feature_matrix_current_index + 1;
         
     else % TARGETS (output of NN)
         % import the EGC signal from the csv 
@@ -59,9 +65,71 @@ for m = 1 : c.number_of_measurement
         csv_table_targets_without_miss = fillmissing(temp_csv_table_targets,"constant", column_means);
 
         % conversion of the table containing the ECGs values
-        targets_matrix_with_outliers = table2array(csv_table_targets_without_miss);
+        matrix_to_extract_mean_std  = table2array(csv_table_targets_without_miss);
 
-        %% REMOVE OUTLIERS
-        matrix_to_extract_mean_std = rmoutliers(targets_matrix_with_outliers);
+        %% EXTRACT FEATURES
+        mean_std_row_vector = get_mean_std(matrix_to_extract_mean_std(:,1));
+        MEAN_ECG = matrix_copy(MEAN_ECG,... 
+                               mean_std_row_vector(:,1),... 
+                               targets_matrix_current_index,... 
+                               1);   
+        STD_ECG = matrix_copy(STD_ECG,... 
+                               mean_std_row_vector(:,2),... 
+                               targets_matrix_current_index,... 
+                               1); 
+        % creation of the vector with the 3 diffent classes of activity 
+        % activity sit defined by the 1
+        if (contains(filename, c.csv_sit_identifier))
+            ACTIVITY_CLASSES(targets_matrix_current_index, 1) = 1;
+        % activity walk defined by the 2
+        elseif (contains(filename, c.csv_walk_identifier))
+            ACTIVITY_CLASSES(targets_matrix_current_index, 1) = 2;
+        % activity run defined by the 3
+        else
+            ACTIVITY_CLASSES(targets_matrix_current_index, 1) = 3;
+        end
+        targets_matrix_current_index = targets_matrix_current_index + 1;
     end
 end
+
+%% REMOVE OUTLIERS
+[MEAN_ECG, to_remove] = rmoutliers(MEAN_ECG);
+FEATURES_MEAN = FEATURES(~to_remove, :);
+fprintf("Remove %i outliers from data (mean)\n", sum(to_remove));
+
+[STD_ECG, to_remove] = rmoutliers(STD_ECG);
+FEATURES_STD = FEATURES(~to_remove, :);
+fprintf("Remove %i outliers from data (std)\n", sum(to_remove));
+
+% transform the activity class vector into one-hot encoding
+ACTIVITY_CLASSES_VECTOR = full(ind2vec(ACTIVITY_CLASSES'))';
+
+%% Save results
+save('saves/BEFORE_NORMALIZATION',...
+    'FEATURES',...
+    'FEATURES_MEAN',...
+    'FEATURES_STD',...
+    'MEAN_ECG',...
+    'STD_ECG',...
+    'ACTIVITY_CLASSES');
+
+%% Normalize and remove correlated columns
+disp("Normalization of the feature matrixes");
+
+% feature matrix used for classification
+FEATURES = normalize_matrix(FEATURES);
+
+% feature matrix used for mean
+FEATURES_MEAN = normalize_matrix(FEATURES_MEAN);
+
+% feature matrix used for std
+FEATURES_STD = normalize_matrix(FEATURES_STD);
+
+%% Save results
+save('saves/BEFORE_DATA_AUGMENTATION',...
+    'FEATURES',...
+    'FEATURES_MEAN',...
+    'FEATURES_STD',...
+    'MEAN_ECG',...
+    'STD_ECG',...
+    'ACTIVITY_CLASSES_VECTOR');

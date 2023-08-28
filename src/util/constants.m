@@ -25,8 +25,7 @@ classdef constants
         % sequentialfs_invoke constants
         features_to_select = 10;
         sequentialfs_hidden_layer_size = 6;
-        windows_number_overlapped = 7;
-        windows_number_contiguos = 4;
+        windows_number_overlapped = 9;
         
         % data augmentation
         autoenc_samples_to_generate = 50;
