@@ -1,0 +1,29 @@
+%% 
+clear
+close all 
+clc
+
+load('saves/BEFORE_SEQUENTIALFS.mat');
+
+BEST_FEATURES_FOR_MEAN_ECG = importdata('feature_extraction\results\best_features_mean_ecg.txt', ' ');
+BEST_FEATURES_FOR_STD_ECG = importdata('feature_extraction\results\best_features_std_ecg.txt', ' ');
+BEST_FEATURES = unique(sort([BEST_FEATURES_FOR_MEAN_ECG; BEST_FEATURES_FOR_STD_ECG]));
+
+INPUT_MEAN = FEATURES_MEAN(:, BEST_FEATURES_FOR_MEAN_ECG)';
+INPUT_STD = FEATURES_STD(:, BEST_FEATURES_FOR_STD_ECG)';
+TARGET_MEAN = MEAN_ECG';
+TARGET_STD = STD_ECG';
+
+INPUT_ACTIVITY = FEATURES(:, BEST_FEATURES)';
+TARGET_ACTIVITY_CLASSES = vec2ind(ACTIVITY_CLASSES_VECTOR');
+TARGET_ACTIVITY_CLASSES_VECTOR = ACTIVITY_CLASSES_VECTOR';
+
+%% Save results
+save('saves/BEFORE_TRAINING',...
+    'INPUT_MEAN',...
+    'INPUT_STD',...
+    'TARGET_MEAN',...
+    'TARGET_STD',...
+    'INPUT_ACTIVITY',...
+    'TARGET_ACTIVITY_CLASSES',...
+    'TARGET_ACTIVITY_CLASSES_VECTOR');
