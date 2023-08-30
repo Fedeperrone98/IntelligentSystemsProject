@@ -18,7 +18,7 @@ fprintf('Max distance across whole input space: %f\n', max(dist));
 % Set network parameters
 
 % [20, 60] con step 10
-max_neurons = 20; 
+max_neurons = 20; % best
 %max_neurons = 30;
 %max_neurons = 40;
 %max_neurons = 50;
@@ -32,18 +32,21 @@ ki = 10;
 % Choose a spread larger than the distance between adjacent input (0.000955),
 % but smaller then the distance across the whole input space (1.796102)
 % [0.2 , 1.6] con step 0.2
-spread = 0.2;
-% spread = 0.4;
-% spread = 0.6;
-% spread = 0.8;
-% spread = 1;
-% spread = 1.2;
-% spread = 1.4;
-% spread = 1.6;
+%spread = 0.2;
+%spread = 0.4;
+%spread = 0.6;
+spread = 0.8; % best
+%spread = 1;
+%spread = 1.2;
+%spread = 1.4;
+%spread = 1.6;
 
 
 % Create Radial Basis Function network
 net = newrb(INPUT, TARGET, goal, spread, max_neurons, ki);
+
+% View the Network
+view(net)
 
 % Print performance and Rsquared
 Y = net(INPUT);
