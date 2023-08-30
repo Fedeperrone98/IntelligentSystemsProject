@@ -12,14 +12,14 @@ t = TARGET_ACTIVITY_CLASSES_VECTOR;
 
 % Choosing a Training Function:
 trainFcn = 'trainbr';  % Bayesian regularization backpropagation
-%trainFcn = 'trainlm';  % Levenberg-Marquardt
-%trainFcn = 'trainscg';  % Scaled conjugate gradient backpropagation
+% trainFcn = 'trainlm';  % Levenberg-Marquardt
+% trainFcn = 'trainscg';  % Scaled conjugate gradient backpropagation
 
 % Selecting a size for the hidden layer 
 % start from half input size -> 20/2 = 10
 % end at 2/3 input size -> 14
 % step -> 1
-hiddenLayerSize = 10;
+hiddenLayerSize = 11;
 
 %% Creation of the Neural Network   
 % Create a Pattern Recognition Network
@@ -41,12 +41,12 @@ net.divideParam.valRatio = 0/100;   % Bayesian regularization does not need vali
 net.divideParam.testRatio = 30/100;
 
 % for training algorithm that need validation
-%net.divideParam.trainRatio = 70/100;
-%net.divideParam.valRatio = 15/100;
-%net.divideParam.testRatio = 15/100;
+% net.divideParam.trainRatio = 70/100;
+% net.divideParam.valRatio = 15/100;
+% net.divideParam.testRatio = 15/100;
 
 % Choose a Performance Function
-net.performFcn = 'crossentropy';  % Cross-Entropy
+net.performFcn = 'mse';
 
 % Choose Plot Functions
 net.plotFcns = {'plotperform','plottrainstate','ploterrhist', ...
