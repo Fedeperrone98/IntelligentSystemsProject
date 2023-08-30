@@ -16,16 +16,34 @@ fprintf('Max distance across whole input space: %f\n', max(dist));
 %% Radial Basis Function (newrb)
 
 % Set network parameters
-error_goal = 0;
-max_neurons = 30;
+
+% [20, 60] con step 10
+max_neurons = 20; 
+%max_neurons = 30;
+%max_neurons = 40;
+%max_neurons = 50;
+%max_neurons = 60;
+
+% performance goal
+goal = 0;
+% number of neurons to add between displays
+ki = 10;
 
 % Choose a spread larger than the distance between adjacent input (0.000955),
 % but smaller then the distance across the whole input space (1.796102)
-spread = 0.45;
+% [0.2 , 1.6] con step 0.2
+spread = 0.2;
+% spread = 0.4;
+% spread = 0.6;
+% spread = 0.8;
+% spread = 1;
+% spread = 1.2;
+% spread = 1.4;
+% spread = 1.6;
 
 
 % Create Radial Basis Function network
-net = newrb(INPUT, TARGET, error_goal, spread, max_neurons, 10);
+net = newrb(INPUT, TARGET, goal, spread, max_neurons, ki);
 
 % Print performance and Rsquared
 Y = net(INPUT);
@@ -43,10 +61,6 @@ figure; plotregression(TARGET, Y)
 % regularization, to improve performance
 net.trainFcn = 'trainbr';
 net.trainParam.epochs = 100;
-
-net.trainParam.show = 20;
-net.trainParam.showCommandLine = 1;
-net.trainParam.showWindow = 0;
 
 [net, tr_after_reg] = train(net, INPUT, TARGET, ...
                             'useParallel','yes');

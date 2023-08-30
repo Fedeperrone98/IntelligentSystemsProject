@@ -17,7 +17,15 @@ fprintf('Max distance across whole input space: %f\n', max(dist));
 
 % Choose a spread larger than the distance between adjacent input (0.000955),
 % but smaller then the distance across the whole input space (1.796102)
-spread = 0.5;
+% [0.2 , 1.6] con step 0.2
+spread = 0.2;
+% spread = 0.4;
+% spread = 0.6;
+% spread = 0.8;
+% spread = 1;
+% spread = 1.2;
+% spread = 1.4;
+% spread = 1.6;
 
 % Create Radial Basis Function network
 net = newrbe(INPUT, TARGET, spread);

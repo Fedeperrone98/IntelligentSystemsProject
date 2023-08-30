@@ -13,21 +13,7 @@ dist = pdist(INPUT');
 fprintf('Min distance between adjacent input vectors: %f\n', min(dist));
 fprintf('Max distance across whole input space: %f\n', max(dist));
 
-%% Newrb
-
-% Set network parameters
-
-% [20, 60] con step 10
-max_neurons = 20; 
-%max_neurons = 30;
-%max_neurons = 40;
-%max_neurons = 50;
-%max_neurons = 60;
-
-% performance goal
-goal = 0;
-% number of neurons to add between displays
-ki = 10;
+%% GRNN
 
 % Choose a spread larger than the distance between adjacent input (0.000955),
 % but smaller then the distance across the whole input space (1.796102)
@@ -42,7 +28,7 @@ spread = 0.2;
 % spread = 1.6;
 
 % Create Radial Basis Function network
-net = newrb(INPUT, TARGET, goal, spread, max_neurons, ki);
+net = newgrnn(INPUT, TARGET, spread);
 
 % View the Network
 view(net)
