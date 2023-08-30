@@ -19,7 +19,7 @@ trainFcn = 'trainbr';  % Bayesian regularization backpropagation
 % start from half input size -> 20/2 = 10
 % end at 2/3 input size -> 14
 % step -> 1
-hiddenLayerSize = 11;
+hiddenLayerSize = 12;
 
 %% Creation of the Neural Network   
 % Create a Pattern Recognition Network
