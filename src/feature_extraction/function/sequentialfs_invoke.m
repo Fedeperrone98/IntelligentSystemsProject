@@ -30,7 +30,7 @@ function sequentialfs_invoke(features, target, filename)
                                  'opt', opts, ...
                                  'nfeatures', constants.features_to_select);
 
-    %Writing the results on a file
+    % Writing the results on a file
     fileID = fopen(strcat('feature_extraction/results/best_features_', filename, '.txt'), 'w');
     fprintf(fileID,'%s\n', num2str(find(fs)));
     fclose(fileID);

@@ -1,0 +1,54 @@
+[System]
+Name='subtractive_clustering_fis'
+Type='sugeno'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=4
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='in1'
+Range=[0 1]
+NumMFs=4
+MF1='in1cluster1':'gaussmf',[0.14925069104649 0.712163987317752]
+MF2='in1cluster2':'gaussmf',[0.178058211553119 0.768498581251255]
+MF3='in1cluster3':'gaussmf',[0.181347626787175 0.443862613792549]
+MF4='in1cluster4':'gaussmf',[0.192132206647435 0.341756076910741]
+
+[Input2]
+Name='in2'
+Range=[0 1]
+NumMFs=4
+MF1='in2cluster1':'gaussmf',[0.192187243349754 0.145430608497229]
+MF2='in2cluster2':'gaussmf',[0.163323468827209 0.11269990531595]
+MF3='in2cluster3':'gaussmf',[0.171446025251997 0.143353561402132]
+MF4='in2cluster4':'gaussmf',[0.185859870020972 0.105720444420841]
+
+[Input3]
+Name='in3'
+Range=[0 1]
+NumMFs=4
+MF1='in3cluster1':'gaussmf',[0.168226130896129 0.0616008664405505]
+MF2='in3cluster2':'gaussmf',[0.202006977941792 0.13909342125934]
+MF3='in3cluster3':'gaussmf',[0.176920422542063 0.133986744859222]
+MF4='in3cluster4':'gaussmf',[0.172531082887972 0.0674571357019002]
+
+[Output1]
+Name='out1'
+Range=[1 3]
+NumMFs=4
+MF1='out1cluster1':'linear',[24.7292197611492 -4.9575485659465 13.4708632945156 -15.7799646661578]
+MF2='out1cluster2':'linear',[18.3673245777145 -26.6297065773271 4.66431423124568 -15.7509432529725]
+MF3='out1cluster3':'linear',[110.714844096308 82.5874107486136 79.1544576731026 -119.33823514856]
+MF4='out1cluster4':'linear',[94.9211089840777 -3.90072675194595 55.1759745225187 21.1882063637804]
+
+[Rules]
+1 1 1, 1 (1) : 1
+2 2 2, 2 (1) : 1
+3 3 3, 3 (1) : 1
+4 4 4, 4 (1) : 1

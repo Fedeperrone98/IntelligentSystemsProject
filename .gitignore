@@ -3,3 +3,6 @@ dataset
 resources
 IntelligentSystemsProject.prj
 *.asv
+*.prj
+src/saves/CNN_data_target.mat
+src/saves/CNN_input.mat
