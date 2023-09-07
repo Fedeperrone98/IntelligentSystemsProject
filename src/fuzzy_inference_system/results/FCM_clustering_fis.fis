@@ -1,0 +1,54 @@
+[System]
+Name='FCM_clustering_fis'
+Type='sugeno'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=4
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='in1'
+Range=[0 1]
+NumMFs=4
+MF1='in1cluster1':'gaussmf',[0.13841362868964 0.51002333606661]
+MF2='in1cluster2':'gaussmf',[0.114103350252055 0.756618513074305]
+MF3='in1cluster3':'gaussmf',[0.18383558488613 0.518360247201521]
+MF4='in1cluster4':'gaussmf',[0.21570225809706 0.683336243129568]
+
+[Input2]
+Name='in2'
+Range=[0 1]
+NumMFs=4
+MF1='in2cluster1':'gaussmf',[0.0704750534944299 0.142773671456236]
+MF2='in2cluster2':'gaussmf',[0.0479588638545647 0.111635622378556]
+MF3='in2cluster3':'gaussmf',[0.087419289612577 0.144294201987973]
+MF4='in2cluster4':'gaussmf',[0.104701092973235 0.162941687674515]
+
+[Input3]
+Name='in3'
+Range=[0 1]
+NumMFs=4
+MF1='in3cluster1':'gaussmf',[0.0875593814313669 0.162763052992493]
+MF2='in3cluster2':'gaussmf',[0.0324290387549267 0.0819945085680243]
+MF3='in3cluster3':'gaussmf',[0.10443968762997 0.139525765235069]
+MF4='in3cluster4':'gaussmf',[0.0559665102197737 0.082158550376441]
+
+[Output1]
+Name='out1'
+Range=[1 3]
+NumMFs=4
+MF1='out1cluster1':'linear',[20.277580769445 32.2230932588346 16.2607311398245 -12.4826278401294]
+MF2='out1cluster2':'linear',[52.9140249616316 -26.0551019187771 -36.9181488880007 -35.6718056519095]
+MF3='out1cluster3':'linear',[-7.03553450835517 -28.8788247140726 5.86464661276808 5.0657752022042]
+MF4='out1cluster4':'linear',[-11.8090937349508 -2.71915658223543 28.9945676196543 11.8389698082541]
+
+[Rules]
+1 1 1, 1 (1) : 1
+2 2 2, 2 (1) : 1
+3 3 3, 3 (1) : 1
+4 4 4, 4 (1) : 1
