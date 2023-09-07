@@ -113,7 +113,7 @@ save('saves/BEFORE_NORMALIZATION',...
     'STD_ECG',...
     'ACTIVITY_CLASSES');
 
-%% Normalize and remove correlated columns
+%% Normalize
 disp("Normalization of the feature matrixes");
 
 % feature matrix used for classification
