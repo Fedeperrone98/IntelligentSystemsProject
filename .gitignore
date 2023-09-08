@@ -6,3 +6,4 @@ IntelligentSystemsProject.prj
 *.prj
 src/saves/CNN_data_target.mat
 src/saves/CNN_input.mat
+src/saves/RNN_ecg.mat
